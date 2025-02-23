@@ -1,0 +1,370 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #ff9966, #ff5e62);
+    color: #fff;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+}
+
+/* Navigation Bar */
+header {
+    position: fixed;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00c6ff;
+}
+
+header button {
+    background: #00c6ff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 50px;
+    left: 0;
+    padding-top: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.sidebar ul li:hover, .sidebar ul .active {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* Main Content */
+main {
+    margin-left: 220px;
+    margin-top: 60px;
+    width: 80%;
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Input Section Styling */
+#courseInputFields {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+#courseInputFields input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 48%;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#courseInputFields button {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #ff5e62;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+}
+
+#courseInputFields button:hover {
+    background-color: #ff3b3b;
+}
+
+/* Content Section */
+.content-section {
+    display: none;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.content-section h2 {
+    color: white;
+}
+
+/* Show Active Section */
+.content-section:not(.hidden) {
+    display: block;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    background: white;
+    color: black;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+
+th {
+    background: #ff5e62;
+    color: white;
+}
+
+/* Buttons */
+button {
+    background-color: #00c6ff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background-color: #007bff;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background: #121212;
+    color: white;
+}
+
+body.dark-mode .sidebar,
+body.dark-mode header {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode table {
+    background: #333;
+    color: white;
+}
+
+body.dark-mode th {
+    background: #007bff;
+}
+
+/* AI Chat Styling */
+.chat-window {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.chat-header {
+    background-color: #00c6ff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-messages .message {
+    padding: 8px;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    max-width: 80%;
+}
+
+.chat-messages .message.user {
+    align-self: flex-end;
+    background-color: #00c6ff;
+    color: white;
+}
+
+.chat-messages .message.ai {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+    color: black;
+}
+
+#userInput {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    width: calc(100% - 20px);
+    font-size: 16px;
+}
+
+#sendBtn {
+    padding: 10px;
+    background-color: #00c6ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+#sendBtn:hover {
+    background-color: #007bff;
+}
+
+.edit-btn, .delete-btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #ffcc00;
+    color: black;
+}
+
+.edit-btn:hover {
+    background-color: #ff9900;
+}
+
+.delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #e60000;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    /* Sidebar Navigation */
+    .sidebar {
+        width: 60px;
+        top: 60px;
+        padding-top: 10px;
+    }
+
+    .sidebar ul li {
+        padding: 10px;
+    }
+
+    /* Main Content */
+    main {
+        margin-left: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* Navigation Bar */
+    header {
+        padding: 10px 15px;
+    }
+
+    header .logo {
+        font-size: 20px;
+    }
+
+    header button {
+        padding: 8px 12px;
+    }
+
+    /* Input Section */
+    #courseInputFields {
+        flex-direction: column;
+    }
+
+    #courseInputFields input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* AI Chat Window */
+    .chat-window {
+        width: 250px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Sidebar Navigation */
+    .sidebar {
+        display: none;
+    }
+
+    /* Main Content */
+    main {
+        margin-left: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* Navigation Bar */
+    header {
+        padding: 10px;
+    }
+
+    header button {
+        display: none;
+    }
+
+    /* AI Chat Window */
+    .chat-window {
+        width: 100%;
+        height: 300px;
+    }
+}

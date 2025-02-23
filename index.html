@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Study Companion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <div class="logo">📚 Study Companion</div>
+        <div class="navbar-title">Intelligent Study Companion</div>
+        <button id="loginBtn">🔑 Login</button>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <ul>
+            <li class="active" onclick="showSection('courses')">📖 Courses</li>
+            <li onclick="showSection('quizzes')">📝 Quizzes</li>
+            <li onclick="showSection('analytics')">📊 Analytics</li>
+            <li onclick="showSection('achievements')">🏆 Achievements</li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Courses Section -->
+        <section id="courses" class="content-section">
+            <h2>Courses</h2>
+            
+            <!-- Input fields for new course -->
+            <div id="courseInputFields">
+                <input type="text" id="courseNameInput" placeholder="Enter course name" />
+                <input type="number" id="courseProgressInput" placeholder="Enter progress (%)" min="0" max="100" />
+                <button id="addCourseBtn">➕ Add Course</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Progress</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="courseTableBody">
+                    <!-- Dynamic content -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Quizzes Section -->
+        <section id="quizzes" class="content-section hidden">
+            <h2>Quizzes</h2>
+            <button id="generateQuizBtn">🎲 Generate Quiz</button>
+            <div id="quizContainer"></div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="content-section hidden">
+            <h2>Progress Analytics</h2>
+            <canvas id="progressChart"></canvas>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements" class="content-section hidden">
+            <h2>Achievements</h2>
+            <div id="badges">🔥 5-Day Streak!</div>
+            <div id="leaderboard">🏅 Top Student: John Doe - 120 Points</div>
+        </section>
+    </main>
+
+    <!-- Floating AI Chat Window -->
+    <div id="chatWindow" class="chat-window">
+        <div class="chat-header">AI Chat</div>
+        <div id="chatMessages" class="chat-messages"></div>
+        <input type="text" id="userInput" placeholder="Ask me anything..." />
+        <button id="sendBtn">Send</button>
+    </div>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="biometric.js"></script>
+    <script type="module" src="ai-chatbot.js"></script>
+
+</body>
+</html>

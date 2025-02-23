@@ -6,8 +6,6 @@ body {
     margin: 0;
     display: flex;
     height: 100vh;
-    flex-direction: row;
-    justify-content: flex-start;
 }
 
 /* Navigation Bar */
@@ -22,7 +20,6 @@ header {
     align-items: center;
     font-size: 18px;
     font-weight: bold;
-    z-index: 10;
 }
 
 header .logo {
@@ -42,7 +39,7 @@ header button {
 
 /* Sidebar Navigation */
 .sidebar {
-    width: 220px;
+    width: 200px;
     height: 100vh;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
@@ -50,16 +47,15 @@ header button {
     top: 50px;
     left: 0;
     padding-top: 20px;
-    z-index: 20;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
+/* Sidebar Links */
 .sidebar ul {
     list-style: none;
     padding: 0;
-    width: 100%;
 }
 
 .sidebar ul li {
@@ -73,30 +69,96 @@ header button {
     background: rgba(255, 255, 255, 0.4);
 }
 
-/* Adding login button and AI chat inside sidebar */
-#loginBtn, #chatWindow {
-    margin-top: auto;
+/* AI Chat Window positioned in Sidebar */
+.chat-window {
+    width: 100%;
+    max-width: 200px; /* Adjust to match sidebar width */
+    height: 300px; /* Adjust height if needed */
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
     padding: 10px;
-    background: #00c6ff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    margin-left: 20px;
-    margin-right: 20px;
+    backdrop-filter: blur(5px);
+    margin-top: auto; /* Move chat to the bottom of sidebar */
 }
 
-#loginBtn:hover, #chatWindow:hover {
-    background: #007bff;
+/* Chat Header */
+.chat-header {
+    background-color: #00c6ff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Chat Messages */
+.chat-messages {
+    flex: 1;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-messages .message {
+    padding: 8px;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    max-width: 80%;
+}
+
+.chat-messages .message.user {
+    align-self: flex-end;
+    background-color: #00c6ff;
+    color: white;
+}
+
+.chat-messages .message.ai {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+    color: black;
+}
+
+/* Input field */
+#userInput {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    width: calc(100% - 20px);
+    font-size: 16px;
+}
+
+/* Send button */
+#sendBtn {
+    padding: 10px;
+    background-color: #00c6ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+#sendBtn:hover {
+    background-color: #007bff;
 }
 
 /* Main Content */
 main {
-    margin-left: 240px; /* Space for sidebar */
-    margin-top: 60px; /* Space for header */
-    width: calc(100% - 240px);
+    margin-left: 220px;
+    margin-top: 60px;
+    width: 80%;
     padding: 20px;
-    overflow: hidden;
 }
 
 /* Input Section Styling */
@@ -205,19 +267,17 @@ body.dark-mode th {
 
 /* AI Chat Styling */
 .chat-window {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    height: 400px;
+    width: 100%;
+    max-width: 200px; /* Adjust to match sidebar width */
+    height: 300px; /* Adjust height if needed */
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     padding: 10px;
-    z-index: 1000;
     backdrop-filter: blur(5px);
+    margin-top: auto; /* Move chat to the bottom of sidebar */
 }
 
 .chat-header {
@@ -310,34 +370,36 @@ body.dark-mode th {
     background-color: #e60000;
 } 
 
-/* Media Query for Small Screens */
-@media screen and (max-width: 768px) {
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Adjust sidebar for smaller screens */
     .sidebar {
-        width: 60px;
-    }
-
-    main {
-        margin-left: 70px;
-        width: calc(100% - 70px);
-    }
-
-    header {
-        padding: 10px;
-    }
-
-    .sidebar ul li {
-        font-size: 14px;
-    }
-
-    .chat-window {
-        bottom: 80px;
-        right: 20px;
-        width: 250px;
-        height: 350px;
-    }
-
-    #loginBtn, #chatWindow {
         width: 100%;
-        text-align: center;
+        height: auto;
+        position: relative;
+    }
+
+    /* Adjust AI chat window for smaller screens */
+    .chat-window {
+        max-width: 100%;
+        width: 100%;
+        height: 250px; /* Adjust height if needed */
+        margin-top: 20px;
+    }
+
+    /* Adjust content section layout */
+    main {
+        margin-left: 0;
+        margin-top: 60px;
+        width: 100%;
+    }
+
+    #courseInputFields {
+        flex-direction: column;
+    }
+
+    #courseInputFields input, #courseInputFields button {
+        width: 100%;
+        margin-bottom: 10px;
     }
 }

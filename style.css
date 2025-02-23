@@ -6,6 +6,8 @@ body {
     margin: 0;
     display: flex;
     height: 100vh;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 /* Navigation Bar */
@@ -20,6 +22,7 @@ header {
     align-items: center;
     font-size: 18px;
     font-weight: bold;
+    z-index: 10;
 }
 
 header .logo {
@@ -39,7 +42,7 @@ header button {
 
 /* Sidebar Navigation */
 .sidebar {
-    width: 200px;
+    width: 220px;
     height: 100vh;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
@@ -47,11 +50,16 @@ header button {
     top: 50px;
     left: 0;
     padding-top: 20px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .sidebar ul {
     list-style: none;
     padding: 0;
+    width: 100%;
 }
 
 .sidebar ul li {
@@ -65,12 +73,30 @@ header button {
     background: rgba(255, 255, 255, 0.4);
 }
 
+/* Adding login button and AI chat inside sidebar */
+#loginBtn, #chatWindow {
+    margin-top: auto;
+    padding: 10px;
+    background: #00c6ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#loginBtn:hover, #chatWindow:hover {
+    background: #007bff;
+}
+
 /* Main Content */
 main {
-    margin-left: 220px;
-    margin-top: 60px;
-    width: 80%;
+    margin-left: 240px; /* Space for sidebar */
+    margin-top: 60px; /* Space for header */
+    width: calc(100% - 240px);
     padding: 20px;
+    overflow: hidden;
 }
 
 /* Input Section Styling */
@@ -284,3 +310,34 @@ body.dark-mode th {
     background-color: #e60000;
 } 
 
+/* Media Query for Small Screens */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+    }
+
+    main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+    }
+
+    header {
+        padding: 10px;
+    }
+
+    .sidebar ul li {
+        font-size: 14px;
+    }
+
+    .chat-window {
+        bottom: 80px;
+        right: 20px;
+        width: 250px;
+        height: 350px;
+    }
+
+    #loginBtn, #chatWindow {
+        width: 100%;
+        text-align: center;
+    }
+}

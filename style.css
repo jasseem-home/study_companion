@@ -6,7 +6,6 @@ body {
     margin: 0;
     display: flex;
     height: 100vh;
-    flex-direction: column;
 }
 
 /* Navigation Bar */
@@ -21,7 +20,6 @@ header {
     align-items: center;
     font-size: 18px;
     font-weight: bold;
-    z-index: 1000;
 }
 
 header .logo {
@@ -49,7 +47,6 @@ header button {
     top: 50px;
     left: 0;
     padding-top: 20px;
-    transition: all 0.3s ease-in-out;
 }
 
 .sidebar ul {
@@ -74,7 +71,6 @@ main {
     margin-top: 60px;
     width: 80%;
     padding: 20px;
-    transition: all 0.3s ease-in-out;
 }
 
 /* Input Section Styling */
@@ -82,7 +78,6 @@ main {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    flex-wrap: wrap;
 }
 
 #courseInputFields input {
@@ -91,7 +86,6 @@ main {
     border: 1px solid #ccc;
     width: 48%;
     font-size: 16px;
-    margin-bottom: 10px;
 }
 
 #courseInputFields button {
@@ -288,7 +282,7 @@ body.dark-mode th {
 
 .delete-btn:hover {
     background-color: #e60000;
-}
+} 
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {

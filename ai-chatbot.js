@@ -1,145 +1,117 @@
 // ai_chatbot.js
 
-// Function to initialize the chatbot
-function initializeChatbot() {
+async function initializeChatbot() {
     const chatContainer = document.getElementById('chatContainer');
     const inputField = document.getElementById('inputField');
     const sendButton = document.getElementById('sendButton');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const resultContainer = document.getElementById('resultContainer');
 
-    // Initialize conversation history and score
     let conversationHistory = [];
     let currentQuestion = 0;
     let score = 0;
     let quizData = [];
 
-    // Event listener for the send button
+    
+    const OPENAI_API_KEY = "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";
+
     sendButton.addEventListener('click', async () => {
         const userInput = inputField.value.trim();
         if (userInput) {
             appendMessage('user', userInput);
             inputField.value = '';
-            loadingIndicator.style.display = 'block'; // Show loading indicator
+            loadingIndicator.style.display = 'block';
 
             try {
                 if (quizData.length === 0) {
-                    // Start a new quiz if no quiz is active
                     const aiResponse = await getQuizQuestions(userInput);
-                    quizData = aiResponse.questions;
-                    showQuestion();
+                    if (aiResponse && aiResponse.questions) {
+                        quizData = aiResponse.questions;
+                        showQuestion();
+                    } else {
+                        appendMessage('ai', 'Sorry, I could not generate a quiz.');
+                    }
                 } else {
-                    // Process the answer if a quiz is active
                     processAnswer(userInput);
                 }
             } catch (error) {
                 console.error('Error fetching AI response:', error);
-                appendMessage('ai', 'Sorry, I am unable to respond at the moment.');
+                appendMessage('ai', 'An error occurred while fetching the quiz.');
             } finally {
-                loadingIndicator.style.display = 'none'; // Hide loading indicator
+                loadingIndicator.style.display = 'none';
             }
         }
     });
 
-    // Function to append messages to the chat container
     function appendMessage(sender, message) {
         const messageContainer = document.createElement('div');
-        messageContainer.classList.add('message');
-        messageContainer.classList.add(sender);
+        messageContainer.classList.add('message', sender);
         messageContainer.innerText = message;
         chatContainer.appendChild(messageContainer);
-        chatContainer.scrollTop = chatContainer.scrollHeight; // Scroll to the latest message
+        chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
-    // Function to fetch quiz questions from AI based on user input (topic)
     async function getQuizQuestions(topic) {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer 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`
+                'Authorization': `Bearer ${OPENAI_API_KEY}`
             },
             body: JSON.stringify({
                 model: 'gpt-3.5-turbo',
                 messages: [
-                    { role: 'system', content: 'You are a quiz master. Generate a quiz with 5 multiple-choice questions on the topic provided by the user.' },
-                    { role: 'user', content: `Generate a quiz on ${topic}` }
-                ]
+                    { role: 'system', content: 'You are a quiz master. Generate a quiz with 5 multiple-choice questions on the topic. Return the response as a JSON object.' },
+                    { role: 'user', content: `Generate a quiz on ${topic} and return in JSON format: { "questions": [ { "question": "What is X?", "options": ["A", "B", "C", "D"], "correctAnswer": "B" } ] }` }
+                ],
+                temperature: 0.7
             })
         });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch AI response');
-        }
+        if (!response.ok) throw new Error('Failed to fetch AI response');
 
         const data = await response.json();
-        const aiMessage = data.choices[0].message.content;
-
-        // Extract quiz data (this would need to be parsed appropriately from AI response)
-        const questions = parseQuizQuestions(aiMessage);
-
-        return { questions };
-    }
-
-    // Parse the quiz questions generated by AI
-    function parseQuizQuestions(aiMessage) {
-        // A simple parser assuming the AI's response will be in a predefined format
-        const questionRegex = /Question (\d+): (.*)/g;
-        const answerRegex = /A\) (.*)\nB\) (.*)\nC\) (.*)\nD\) (.*)/g;
-        const questions = [];
-
-        let questionMatch;
-        while ((questionMatch = questionRegex.exec(aiMessage)) !== null) {
-            const question = questionMatch[2];
-            const answerMatch = answerRegex.exec(aiMessage);
-            if (answerMatch) {
-                questions.push({
-                    question,
-                    options: [answerMatch[1], answerMatch[2], answerMatch[3], answerMatch[4]],
-                    correctAnswer: 'A'  // You can expand this logic based on AI responses or evaluation
-                });
-            }
+        try {
+            return JSON.parse(data.choices[0].message.content);
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            return null;
         }
-
-        return questions;
     }
 
-    // Function to display a question
     function showQuestion() {
         if (currentQuestion < quizData.length) {
             const question = quizData[currentQuestion];
-            appendMessage('ai', question.question);
-            appendMessage('ai', `A) ${question.options[0]}`);
-            appendMessage('ai', `B) ${question.options[1]}`);
-            appendMessage('ai', `C) ${question.options[2]}`);
-            appendMessage('ai', `D) ${question.options[3]}`);
+            appendMessage('ai', `Question: ${question.question}`);
+            question.options.forEach((option, index) => {
+                const optionLetter = String.fromCharCode(65 + index); // Convert index (0-3) to A-D
+                appendMessage('ai', `${optionLetter}) ${option}`);
+            });
             appendMessage('ai', "Please select an answer (A, B, C, or D).");
-            currentQuestion++;
         } else {
             showResults();
         }
     }
 
-    // Function to process the user's answer and check if it's correct
     function processAnswer(userAnswer) {
         if (currentQuestion > 0) {
             const question = quizData[currentQuestion - 1];
-            if (userAnswer.toUpperCase() === question.correctAnswer) {
+            const correctLetter = question.correctAnswer;
+            if (userAnswer.toUpperCase() === correctLetter) {
                 score++;
+                appendMessage('ai', `Correct! ✅`);
+            } else {
+                appendMessage('ai', `Wrong! ❌ The correct answer was ${correctLetter}.`);
             }
+            currentQuestion++;
             showQuestion();
         }
     }
 
-    // Function to show the results of the quiz
     function showResults() {
-        const resultMessage = `Your score is ${score} out of ${quizData.length}.`;
-        appendMessage('ai', resultMessage);
-        resultContainer.innerHTML = resultMessage;
+        appendMessage('ai', `Quiz Over! 🎉 Your score: ${score}/${quizData.length}`);
+        resultContainer.innerText = `Your score: ${score} out of ${quizData.length}`;
     }
 }
 
-// Initialize chatbot when the page is ready
-document.addEventListener('DOMContentLoaded', () => {
-    initializeChatbot();
-});
+document.addEventListener('DOMContentLoaded', initializeChatbot);

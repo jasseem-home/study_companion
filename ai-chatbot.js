@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let score = 0;
     let quizData = [];
 
-    // API Key (Ensure this is stored securely, not in frontend)
+    // API Key 
     const OPENAI_API_KEY = "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";
 
     // Send message event listener
